@@ -48,14 +48,15 @@ app.listen(3000,()=>console.log('Running on lacalhost:3000'));
   "server": "nodemon --watch server --exec babel-node -- server/index.js",
 ```
 ## 【附录 git上传代码到github】
->
+```javascript
 git status
 git add.
 git commit -m "add file"
 git push
 此时，会出现Username及Password的输入确认
 完成后，到对应github的项目下确认，发现代码已经上传
-注：.gitignore里设置不上传node_modules 
+```
+## 注：.gitignore里设置不上传node_modules 
 1. 直接node_modules/
 2. 或者
 ```
