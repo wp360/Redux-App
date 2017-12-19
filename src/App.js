@@ -1,13 +1,20 @@
 import React from 'react';
-import { Button } from 'antd-mobile';
-//import 'antd-mobile/dist/antd-mobile.css';
+import {add} from './redux/index';
+import { Button,List } from 'antd-mobile';
+import 'antd-mobile/dist/antd-mobile.css';
 
 class App extends React.Component {
   render() {
-    let txt = 'React App 开发';
+    const txt = 'React App 开发';
+    //Redux store来存放应用的状态
+    const store = this.props.store;
+    //初始状态
+    const num = store.getState();
     return (
       <div>
-        <h2>{txt}</h2>
+        <h1>现在有项目数量{num}个</h1>
+        <Button type='primary' onClick={() => store.dispatch(add())}>项目值变化</Button>
+        <h2>项目 — {txt} </h2>
         <TxtCont cont='Redux'></TxtCont>
         <Txts cont='Router'></Txts>
       </div>
@@ -45,9 +52,11 @@ class TxtCont extends React.Component{
         <h2>{this.props.cont}</h2>
         <p>方法二：onClick里使用箭头函数 () => this.addCont()</p>
         <Button type='primary' onClick={()=>this.addCont()}>添加项目</Button>
-        <ul>
-          {this.state.conts.map(v=><li key={v}>{v}</li>)}
-        </ul>
+        <List renderHeader={() => '项目列表'} className="my-list">
+          {this.state.conts.map(v =>{
+            return (<List.Item key={v}>{v}</List.Item>)
+          })}
+        </List>
       </div>
     )
   }
