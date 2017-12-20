@@ -1,3 +1,5 @@
+import { setTimeout } from "timers";
+
 const ADD_Num = '增加数量';
 const REDUCE_Num = '减少数量';
 //通过reducer建立
@@ -18,4 +20,11 @@ export function add(){
 }
 export function reduce() {
     return { type: REDUCE_Num };
+}
+export function addAsync(){
+    return dispatch =>{
+        setTimeout(()=>{
+            dispatch(add());
+        },2000);
+    };
 }

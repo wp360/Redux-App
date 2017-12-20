@@ -12,11 +12,13 @@ class App extends React.Component {
     //组件内部获取
     const add = this.props.add;
     const reduce = this.props.reduce;
+    const addAsync = this.props.addAsync;
     return (
       <div>
         <h1>现在有项目数量{num}个</h1>
         <Button type='primary' inline size="small" onClick={() => store.dispatch(add())}> 项目值上升 </Button>
         <Button type='primary' inline size="small" onClick={() => store.dispatch(reduce())}> 项目值下降 </Button>
+        <Button type='primary' inline size="small" onClick={() => store.dispatch(addAsync())}> 异步处理 </Button>
         <h2>项目 — {txt} </h2>
         <TxtCont cont='Redux'></TxtCont>
         <Txts cont='Router'></Txts>
