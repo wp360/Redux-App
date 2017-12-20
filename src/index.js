@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { createStore } from 'redux';
 import App from './App';
-import { counter } from './redux/index';
+import { counter,add,reduce } from './redux/index';
 
 import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(counter);
 
 function render(){
-    ReactDOM.render(<App store={store} />, document.getElementById('root'));
+    ReactDOM.render(<App store={store} add={add} reduce={reduce} />, document.getElementById('root'));
 }
 
 render();

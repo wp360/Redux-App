@@ -1,5 +1,4 @@
 import React from 'react';
-import {add} from './redux/index';
 import { Button,List } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
 
@@ -10,10 +9,14 @@ class App extends React.Component {
     const store = this.props.store;
     //初始状态
     const num = store.getState();
+    //组件内部获取
+    const add = this.props.add;
+    const reduce = this.props.reduce;
     return (
       <div>
         <h1>现在有项目数量{num}个</h1>
-        <Button type='primary' onClick={() => store.dispatch(add())}>项目值变化</Button>
+        <Button type='primary' inline size="small" onClick={() => store.dispatch(add())}> 项目值上升 </Button>
+        <Button type='primary' inline size="small" onClick={() => store.dispatch(reduce())}> 项目值下降 </Button>
         <h2>项目 — {txt} </h2>
         <TxtCont cont='Redux'></TxtCont>
         <Txts cont='Router'></Txts>
