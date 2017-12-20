@@ -1,24 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { add,reduce,addAsync } from './redux/index';
 import { Button,List } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
 
 class App extends React.Component {
   render() {
     const txt = 'React App 开发';
-    //Redux store来存放应用的状态
-    const store = this.props.store;
-    //初始状态
-    const num = store.getState();
-    //组件内部获取
-    const add = this.props.add;
-    const reduce = this.props.reduce;
-    const addAsync = this.props.addAsync;
     return (
       <div>
-        <h1>现在有项目数量{num}个</h1>
-        <Button type='primary' inline size="small" onClick={() => store.dispatch(add())}> 项目值上升 </Button>
-        <Button type='primary' inline size="small" onClick={() => store.dispatch(reduce())}> 项目值下降 </Button>
-        <Button type='primary' inline size="small" onClick={() => store.dispatch(addAsync())}> 异步处理 </Button>
+        <h1>现在有项目数量{this.props.num}个</h1>
+        <Button type='primary' inline size="small" onClick={this.props.add}> 项目值上升 </Button>
+        <Button type='primary' inline size="small" onClick={this.props.reduce}> 项目值下降 </Button>
+        <Button type='primary' inline size="small" onClick={this.props.addAsync}> 异步处理 </Button>
         <h2>项目 — {txt} </h2>
         <TxtCont cont='Redux'></TxtCont>
         <Txts cont='Router'></Txts>
@@ -70,4 +64,10 @@ class TxtCont extends React.Component{
 function Txts(props){
   return <h2>{props.cont}</h2>
 }
-export default App;
+
+const mapStatetoProps = (state) =>{
+  return {num:state}
+}
+const actionCreators = {add,reduce,addAsync}
+App = connect(mapStatetoProps,actionCreators)(App)
+export default App
