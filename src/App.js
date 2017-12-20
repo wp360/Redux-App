@@ -66,7 +66,7 @@ function Txts(props){
 }
 
 const mapStatetoProps = (state) =>{
-  return {num:state}
+  return { num: state.counter}
 }
 const actionCreators = {add,reduce,addAsync}
 App = connect(mapStatetoProps,actionCreators)(App)

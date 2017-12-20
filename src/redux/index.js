@@ -3,14 +3,14 @@ import { setTimeout } from "timers";
 const ADD_Num = '增加数量';
 const REDUCE_Num = '减少数量';
 //通过reducer建立
-export function counter(state = 0, action) {
+export function counter(state = 10, action) {
     switch (action.type) {
         case ADD_Num:
             return state + 1
         case REDUCE_Num:
             return state - 1
         default:
-            return 10
+            return state
     }
 }
 

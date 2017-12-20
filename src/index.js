@@ -5,48 +5,36 @@ import { createStore,applyMiddleware,compose } from 'redux';
 import thunk from 'redux-thunk';
 //React-Redux 提供Provider组件，可以让容器组件拿到state
 import { Provider } from 'react-redux';
-import App from './App';
-import { counter } from './redux/index';
+
 import {
     BrowserRouter,
     Route,
-    Link
+    Redirect,
+    Switch
 } from 'react-router-dom';
+
+import reducers from './reducer';
+import Auth from './Auth.js';
+import Dashboard from './Dashboard';
+
 import registerServiceWorker from './registerServiceWorker';
 
 //const reduxDevtools = window.devToolsExtension;
 //组合函数compose的使用 替换createStore(counter, applyMiddleware(thunk));
-const store = createStore(counter,compose(
+const store = createStore(reducers,compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension():f=>f
 ));
-
-const About = () => (
-    <div>
-        <h2>About</h2>
-    </div>
-)
-
-const Topics = () => (
-    <div>
-        <h2>Topics</h2>
-    </div>
-)
+console.log(store.getState());
 
 ReactDOM.render(
     (<Provider store={store}>
         <BrowserRouter>
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/about">About</Link></li>
-                    <li><Link to="/topics">Topics</Link></li>
-                </ul>
-                <hr />
-                <Route exact path="/" component={App} />
-                <Route path="/about" component={About} />
-                <Route path="/topics" component={Topics} />
-            </div>
+            <Switch>
+                <Route path="/login" component={Auth} />
+                <Route path="/dashboard" component={Dashboard} />
+                <Redirect to='/dashboard'></Redirect>
+            </Switch>
         </BrowserRouter>
     </Provider>),
     document.getElementById('root')
