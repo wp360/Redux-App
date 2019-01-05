@@ -1,4 +1,6 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {addGun, reduceGun, addGunAsync} from './index.redux'
 import {Button, List} from 'antd-mobile'
 import 'antd-mobile/dist/antd-mobile.css'
 // 建立store
@@ -7,20 +9,17 @@ import 'antd-mobile/dist/antd-mobile.css'
 class App extends React.Component {
   render(){
     const boss = '李云龙'
-    const store = this.props.store
-    const num = store.getState()
-    const addGun = this.props.addGun
-    const reduceGun = this.props.reduceGun
-    const addGunAsync = this.props.addGunAsync
+    // const store = this.props.store
+    // const num = store.getState()
     return (
       <div>
         <h2>独立团，团长{boss}</h2>
         <一营 老大='张大喵'></一营>
         <骑兵连 老大='孙德胜'></骑兵连>
-        <h3>现在有机枪{num}把</h3>
-        <Button onClick={()=>store.dispatch(addGun())}>申请武器</Button>
-        <Button onClick={()=>store.dispatch(reduceGun())}>上交武器</Button>
-        <Button onClick={()=>store.dispatch(addGunAsync())}>稍后上缴</Button>
+        <h3>现在有机枪{this.props.num}把</h3>
+        <Button onClick={this.props.addGun}>申请武器</Button>
+        <Button onClick={this.props.reduceGun}>上交武器</Button>
+        <Button onClick={this.props.addGunAsync}>稍后上缴</Button>
       </div>
     )
   }
@@ -109,4 +108,9 @@ class 一营 extends React.Component {
   }
 }
 
+const mapStatetoProps = (state) => {
+  return {num: state}
+}
+const actionCreators = {addGun, reduceGun, addGunAsync}
+App = connect(mapStatetoProps, actionCreators)(App)
 export default App

@@ -142,6 +142,48 @@ const store = createStore(counter, compose(
   window.devToolsExtension?window.devToolsExtension():f=>f
 ))
 ```
+## 优雅管理
+1. 使用react-redux
+2. 安装 `npm install react-redux --save`
+3. 忘记subscribe，记住reducer，action和dispatch即可
+4. react-redux提供Provider和connect两个接口来连接
+#### 具体使用
+* Provider组件在应用最外层，传入store即可，只用一次
+```js
+// index.js
+import { counter, addGun, reduceGun, addGunAsync } from './index.redux'
+
+function render () {
+  ReactDOM.render(<App store={store} addGun={addGun} reduceGun={reduceGun} addGunAsync={addGunAsync} />, document.getElementById('root'));
+}
+render()
+store.subscribe(render)
+// 改为
+import {Provider} from 'react-redux'
+import { counter } from './index.redux'
+
+ReactDOM.render(
+  (<Provider store={store}>
+    <App />
+  </Provider>),
+  document.getElementById('root')
+)
+```
+* Connect负责从外部获取组件需要的参数
+```js
+// App.js (重点调整)
+import {connect} from 'react-redux'
+import {addGun, reduceGun, addGunAsync} from './index.redux'
+
+// 添加方法
+const mapStatetoProps = (state) => {
+  return {num: state}
+}
+const actionCreators = {addGun, reduceGun, addGunAsync}
+App = connect(mapStatetoProps, actionCreators)(App)
+export default App
+```
+* Connect可以用装饰器的方式来书写
 ## git 远程分支上传
 ```
 git remote add origin https://github.com/wp360/Redux-App.git
