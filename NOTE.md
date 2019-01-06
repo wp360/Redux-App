@@ -184,6 +184,49 @@ App = connect(mapStatetoProps, actionCreators)(App)
 export default App
 ```
 * Connect可以用装饰器的方式来书写
+#### 使用装饰器优化connect代码
+* npm run eject 弹出个性化配置
+* npm install babel-plugin-transform-decorators-legacy --save-dev插件
+> 注意：label7新版 使用npm i @babel/plugin-proposal-decorators --save-dev
+```
+如果出现：Uncaught Error: Cannot find module 'babel-runtime/helpers/slicedToArray'等错误
+解决办法：
+1. npm add @babel/runtime
+2. npm install
+```
+* package.json里babel加上plugins配置
+```js
+//首先，package.json里设置
+  "babel":{
+    "presets" : [
+      "react-app"
+    ],
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd-mobile",
+          "style": "css"
+        },
+        "transform-decorators-legacy" // 新版用["@babel/plugin-proposal-decorators", { "legacy": true }],
+      ]
+    ]
+//然后，App.js里调整
+const mapStatetoProps = (state) =>{
+  return {num:state}
+}
+const actionCreators = {add,reduce,addAsync}
+App = connect(mapStatetoProps,actionCreators)(App)
+//替换为：
+@connect(
+    //你要state什么属性放到props里
+    state =>({num:state}),
+    //你要什么方法，放到props里，自动dispatch
+    {add,reduce,addAsync}
+)
+```
+[React-Redux 的用法参考](http://blog.csdn.net/yuanyuanispeak/article/details/78842977)
+
 ## git 远程分支上传
 ```
 git remote add origin https://github.com/wp360/Redux-App.git

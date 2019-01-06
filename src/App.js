@@ -2,9 +2,18 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {addGun, reduceGun, addGunAsync} from './index.redux'
 import {Button, List} from 'antd-mobile'
-import 'antd-mobile/dist/antd-mobile.css'
+// import 'antd-mobile/dist/antd-mobile.css'
 // 建立store
 // import {createStore} from 'redux'
+
+@connect(
+    //你要state什么属性放到props里
+    state => ({
+      num: state
+    }),
+    //你要什么方法，放到props里，自动dispatch
+    {addGun, reduceGun, addGunAsync}
+)
 
 class App extends React.Component {
   render(){
@@ -108,9 +117,9 @@ class 一营 extends React.Component {
   }
 }
 
-const mapStatetoProps = (state) => {
-  return {num: state}
-}
-const actionCreators = {addGun, reduceGun, addGunAsync}
-App = connect(mapStatetoProps, actionCreators)(App)
+// const mapStatetoProps = (state) => {
+//   return {num: state}
+// }
+// const actionCreators = {addGun, reduceGun, addGunAsync}
+// App = connect(mapStatetoProps, actionCreators)(App)
 export default App
