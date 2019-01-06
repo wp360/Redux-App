@@ -282,6 +282,22 @@ const Topics = () => (
 2. 没有登录信息 统一跳转login
 3. 页面 导航+显示+注销
 
+## 前后端联调
+> 使用axios发送异步请求
+* 如何发送，端口不一致，使用proxy配置转发
+* axios拦截器，统一loading处理
+* redux里使用异步数据，渲染页面
+
+## Axios使用
+1. 安装依赖 `npm install axios --save`
+2. 添加配置 proxy
+```js
+// package.json
+// ... 省略
+  "proxy":"http://localhost:5000"
+}
+```
+
 ## git 远程分支上传
 ```
 git remote add origin https://github.com/wp360/Redux-App.git
