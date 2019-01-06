@@ -298,3 +298,40 @@ git push
 
 git push --set-upstream origin jobs-chat
 ```
+## 备注
+1. React 版本，默认15，手动更新为16（现在默认16了）
+`npm install --save react@next react-dom@next`
+2. 代码参考
+[https://github.com/fangfeiyue/React-Redux-Recruitment-software](https://github.com/fangfeiyue/React-Redux-Recruitment-software)
+3. 报错已经引入了react-redux，使用Provider的时候却报错unexpected token
+> 解决：.babelrc添加presets，安装依赖
+`npm install --save-dev babel-preset-react`
+`npm install --save-dev babel-preset-es2015 babel-preset-react`
+```js
+  "presets": [
+    "react",
+    "es2015"
+  ],
+```
+> 依然报错，Module build failed: Error: Cannot find module 'babel-helper-builder-react-jsx'
+`npm install babel-helper-builder-react-jsx --save-dev`
+```js
+// ../src/redux/Auth.js
+    switch(action.type){
+        case Login:
+            return {...state, isAuth: true }
+        case Logout:
+            return {...state, isAuth: false }
+        default:
+            return state
+    }
+    // 去掉...
+    switch(action.type){
+        case Login:
+            return {state, isAuth: true }
+        case Logout:
+            return {state, isAuth: false }
+        default:
+            return state
+    }
+```
