@@ -227,6 +227,61 @@ App = connect(mapStatetoProps,actionCreators)(App)
 ```
 [React-Redux 的用法参考](http://blog.csdn.net/yuanyuanispeak/article/details/78842977)
 
+## Router4
+[https://reacttraining.com/react-router/](https://reacttraining.com/react-router/)
+`npm install react-router-dom --save`
+
+```js
+//index.js
+import {
+  BrowserRouter,
+  Route,
+  Link
+} from 'react-router-dom';
+//<App /> 替换为<BrowserRouter>...省略</BrowserRouter>
+ReactDOM.render(
+    (<Provider store={store}>
+        //路由对应渲染模板
+        <BrowserRouter>
+            <div>
+                //点击跳转到指定路由
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/about">About</Link></li>
+                    <li><Link to="/topics">Topics</Link></li>
+                </ul>
+                <hr />
+                // exact 表明完全匹配
+                <Route exact path="/" component={App} />
+                <Route path="/about" component={About} />
+                <Route path="/topics" component={Topics} />
+            </div>
+        </BrowserRouter>
+    </Provider>),
+    document.getElementById('root')
+)
+//添加子页
+const About = () => (
+    <div>
+        <h2>About</h2>
+    </div>
+)
+
+const Topics = () => (
+    <div>
+        <h2>Topics</h2>
+    </div>
+)
+```
+* url参数，Route组件参数可以用冒号标识参数
+* Redirect组件 跳转
+* Switch只渲染一个Route组件
+
+## 路由和Redux配合-复杂 Redux应用
+1. 登录
+2. 没有登录信息 统一跳转login
+3. 页面 导航+显示+注销
+
 ## git 远程分支上传
 ```
 git remote add origin https://github.com/wp360/Redux-App.git
