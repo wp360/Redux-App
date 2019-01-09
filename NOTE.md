@@ -298,6 +298,27 @@ const Topics = () => (
 }
 ```
 ## Axios拦截器
+```js
+// 拦截请求
+axios.interceptors.request.use(function(config){
+  Toast.loading('加载中',0)
+  return config
+})
+
+// 拦截响应
+axios.interceptors.response.use(function (config) {
+  setTimeout(()=> {
+    Toast.hide()
+  }, 2000)
+  return config
+})
+```
+
+## 开发模式
+1. 基于cookie用户验证
+* express依赖cookie-parser，需要npm install cookie-parser --save安装
+* cookie类似于一张身份卡，登录后服务器端返回，你带着cookie就可以访问受限资源
+* 页面cookie的管理浏览器会自动处理
 
 ## git 远程分支上传
 ```

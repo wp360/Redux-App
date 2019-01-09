@@ -5,11 +5,16 @@ import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
 import {
   BrowserRouter,
-  Route
+  Route,
+  Redirect,
+  Switch
 } from 'react-router-dom'
-import Login from './container/login/login'
-import Register from './container/register/register'
+import './index.css'
+
+// import { counter } from './index.redux'
 import reducers from './reducer'
+import Auth from './Auth'
+import Dashboard from './Dashboard'
 import './config'
 import * as serviceWorker from './serviceWorker'
 
@@ -24,10 +29,11 @@ const store = createStore(reducers, compose(
 ReactDOM.render(
   (<Provider store={store}>
     <BrowserRouter>
-      <div>
-        <Route path='/login' component={Login}/>
-        <Route path='/register' component={Register}/>
-      </div>
+      <Switch>
+        <Route path='/login' component={Auth}/>
+        <Route path='/dashboard' component={Dashboard}/>
+        <Redirect to='/dashboard'/>
+      </Switch>
     </BrowserRouter>
   </Provider>),
   document.getElementById('root')
