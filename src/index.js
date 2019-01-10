@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom'
 import Login from './container/login/login'
 import Register from './container/register/register'
+import AuthRoute from './component/authroute/authroute'
 import reducers from './reducer'
 import './config'
 import * as serviceWorker from './serviceWorker'
@@ -20,11 +21,16 @@ const store = createStore(reducers, compose(
 ))
 
 // console.log(store.getState())
+function Boss() {
+  return <h2>BOSS 页面</h2>
+}
 
 ReactDOM.render(
   (<Provider store={store}>
     <BrowserRouter>
       <div>
+        <AuthRoute />
+        <Route path='/boss' component={Boss}/>
         <Route path='/login' component={Login}/>
         <Route path='/register' component={Register}/>
       </div>
