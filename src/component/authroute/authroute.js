@@ -29,7 +29,8 @@ class AuthRoute extends React.Component{
     // 用户是否完善信息（选择头像 个人简介）
   }
   render() {
-    return <p>判断是否登录的地方</p>
+    return null
+    // return <p>判断是否登录的地方</p>
   }
 }
 

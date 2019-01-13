@@ -324,6 +324,9 @@ axios.interceptors.response.use(function (config) {
 `npm i body-parser --save`
 > body-parser是非常常用的一个express中间件，作用是对post请求的请求体进行解析。
 
+## MD5加密第三方库utility
+`npm install utility --save`
+
 ## git 远程分支上传
 ```
 git remote add origin https://github.com/wp360/Redux-App.git
