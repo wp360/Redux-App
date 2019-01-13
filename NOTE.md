@@ -320,6 +320,10 @@ axios.interceptors.response.use(function (config) {
 * cookie类似于一张身份卡，登录后服务器端返回，你带着cookie就可以访问受限资源
 * 页面cookie的管理浏览器会自动处理
 
+## body-parser
+`npm i body-parser --save`
+> body-parser是非常常用的一个express中间件，作用是对post请求的请求体进行解析。
+
 ## git 远程分支上传
 ```
 git remote add origin https://github.com/wp360/Redux-App.git
