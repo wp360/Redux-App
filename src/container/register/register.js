@@ -38,11 +38,14 @@ class Register extends React.Component{
   }
   render() {
     const RadioItem = Radio.RadioItem
+    const titleStyle = {
+      textAlign: 'center'
+    }
     return (
       <div>
         {this.props.redirectTo?<Redirect to={this.props.redirectTo} />:null}
         <Logo />
-        <h2>注册页</h2>
+        <h2 style={titleStyle}>注册页</h2>
         <WingBlank>
           <List>
             {this.props.msg?<p className='error-msg'>{this.props.msg}</p>:null}
@@ -52,8 +55,8 @@ class Register extends React.Component{
             <WhiteSpace />
             <InputItem type="password" onChange={v=>this.handleChange('repeatpwd',v)}>确认密码</InputItem>
             <WhiteSpace />
-            <RadioItem checked={this.state.type === 'genius'} onChange={v=>this.handleChange('type','genius')}>人才</RadioItem>
-            <RadioItem checked={this.state.type === 'boss'} onChange={v=>this.handleChange('type','boss')}>Boss</RadioItem>
+            <RadioItem checked={this.state.type === 'genius'} onChange={()=>this.handleChange('type','genius')}>人才</RadioItem>
+            <RadioItem checked={this.state.type === 'boss'} onChange={()=>this.handleChange('type','boss')}>Boss</RadioItem>
             <WhiteSpace />
             <Button type='primary' onClick={this.handleRegister}>注册</Button>
           </List>

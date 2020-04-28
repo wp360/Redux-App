@@ -6,8 +6,23 @@ const User = model.getModel('user')
 
 // 用户列表
 Router.get('/list',function(req,res){
+  // 清空用户信息
+  // User.remove({}, function(e,d){})
   User.find({},function(err,doc) {
     return res.json(doc)
+  })
+})
+
+// 用户登录
+Router.post('/login', function(req, res){
+  // console.log(req.body)
+  const {user,pwd,type} = req.body
+  // {'pwd': 0} 密码前端不显示
+  User.findOne({user, pwd: md5Pwd(pwd)},{'pwd': 0},function(err,doc){
+    if(!doc){
+      return res.json({code:1, msg: '用户名不存在或者密码错误'})
+    }
+    return res.json({code:0, data: doc})
   })
 })
 
