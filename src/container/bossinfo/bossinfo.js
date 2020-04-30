@@ -6,7 +6,14 @@ import {
   Button
 } from 'antd-mobile'
 import AvatarSelector from '../../component/avatar-selector/avatar-selector'
+// redux >> update数据存储
+import { connect } from 'react-redux'
+import { update } from '../../redux/user.redux'
 
+@connect(
+  state=>state.user,
+  {update}
+)
 class BossInfo extends React.Component{
   constructor(props) {
     super(props)
@@ -36,7 +43,7 @@ class BossInfo extends React.Component{
           autoHeight
           title='职位要求'
         ></TextareaItem>
-        <Button type="primary" className="save-btn" style={{marginTop: 20}}>保存</Button>
+        <Button type="primary" className="save-btn" style={{marginTop: 20}} onClick={()=> this.props.update(this.state)}>保存</Button>
       </div>
     )
   }
