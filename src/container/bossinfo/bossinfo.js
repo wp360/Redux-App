@@ -9,6 +9,7 @@ import AvatarSelector from '../../component/avatar-selector/avatar-selector'
 // redux >> update数据存储
 import { connect } from 'react-redux'
 import { update } from '../../redux/user.redux'
+import { Redirect } from 'react-router-dom'
 
 @connect(
   state=>state.user,
@@ -29,8 +30,11 @@ class BossInfo extends React.Component{
   }
 
   render() {
+    const path = this.props.location.pathname
+    const redirect = this.props.redirectTo
     return (
       <div>
+        {redirect && redirect !== path ? <Redirect to={this.props.redirectTo}></Redirect> : null}
         <NavBar mode="dark">Boss完善信息页面</NavBar>
         {/* selectAvatar={this.selectAvatar} */}
         <AvatarSelector selectAvatar={(imgname) => {this.setState({avatar: imgname})}}></AvatarSelector>

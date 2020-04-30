@@ -15,6 +15,23 @@ Router.get('/list',function(req,res){
   })
 })
 
+// 用户信息上传
+Router.post('/update', function(req, res) {
+  const userid = req.cookies.userid
+  if(!userid) {
+    // koa将对象转换为 JSON 字符串
+    return json.dumps({code: 1})
+  }
+  const body = req.body
+  User.findByIdAndUpdate(userid,body,function(err,doc) {
+    const data = Object.assign({}, {
+      user: doc.user,
+      type: doc.type
+    }, body)
+    return res.json({code: 0, data})
+  })
+})
+
 // 用户登录
 Router.post('/login', function(req, res){
   // console.log(req.body)
