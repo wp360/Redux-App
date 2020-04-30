@@ -15,14 +15,12 @@ import { Redirect } from 'react-router-dom'
   state=>state.user,
   {update}
 )
-class BossInfo extends React.Component{
+class GeniusInfo extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
       title: '',
-      desc: '',
-      company: '',
-      money: ''
+      desc: ''
     }
   }
 
@@ -38,17 +36,15 @@ class BossInfo extends React.Component{
     return (
       <div>
         {redirect && redirect !== path ? <Redirect to={this.props.redirectTo}></Redirect> : null}
-        <NavBar mode="dark">Boss完善信息页面</NavBar>
+        <NavBar mode="dark">求职者完善信息页面</NavBar>
         {/* selectAvatar={this.selectAvatar} */}
         <AvatarSelector selectAvatar={(imgname) => {this.setState({avatar: imgname})}}></AvatarSelector>
-        <InputItem onChange={(v)=>this.onChange('title', v)}>招聘职位</InputItem>
-        <InputItem onChange={(v)=>this.onChange('company', v)}>公司名称</InputItem>
-        <InputItem onChange={(v)=>this.onChange('money', v)}>职位薪资</InputItem>
+        <InputItem onChange={(v)=>this.onChange('title', v)}>求职岗位</InputItem>
         <TextareaItem
           onChange={(v)=>this.onChange('desc', v)}
           row={3}
           autoHeight
-          title='职位要求'
+          title='自我介绍'
         ></TextareaItem>
         <Button type="primary" className="save-btn" style={{marginTop: 20}} onClick={()=> this.props.update(this.state)}>保存</Button>
       </div>
@@ -56,4 +52,4 @@ class BossInfo extends React.Component{
   }
 }
 
-export default BossInfo
+export default GeniusInfo

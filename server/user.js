@@ -19,7 +19,7 @@ Router.get('/list',function(req,res){
 Router.post('/update', function(req, res) {
   const userid = req.cookies.userid
   if(!userid) {
-    // koa将对象转换为 JSON 字符串
+    // 将对象转换为 JSON 字符串
     return json.dumps({code: 1})
   }
   const body = req.body

@@ -5,12 +5,16 @@ import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
 import {
   BrowserRouter,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom'
 import Login from './container/login/login'
 import Register from './container/register/register'
 import AuthRoute from './component/authroute/authroute'
+// Boss信息
 import BossInfo from './container/bossinfo/bossinfo'
+// 求职者信息
+import GeniusInfo from './container/geniusinfo/geniusinfo'
 import reducers from './reducer'
 import './config'
 import './index.css'
@@ -23,19 +27,21 @@ const store = createStore(reducers, compose(
 ))
 
 // console.log(store.getState())
-function Boss() {
-  return <h2>BOSS 页面</h2>
-}
+// function Boss() {
+//   return <h2>BOSS 页面</h2>
+// }
 
 ReactDOM.render(
   (<Provider store={store}>
     <BrowserRouter>
       <div>
         <AuthRoute />
-        <Route path='/bossinfo' component={BossInfo}/>
-        <Route path='/boss' component={Boss}/>
-        <Route path='/login' component={Login}/>
-        <Route path='/register' component={Register}/>
+        <Switch>
+          <Route path='/bossinfo' component={BossInfo}/>
+          <Route path='/geniusinfo' component={GeniusInfo}/>
+          <Route path='/login' component={Login}/>
+          <Route path='/register' component={Register}/>
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>),
