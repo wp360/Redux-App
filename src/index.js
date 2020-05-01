@@ -15,6 +15,8 @@ import AuthRoute from './component/authroute/authroute'
 import BossInfo from './container/bossinfo/bossinfo'
 // 求职者信息
 import GeniusInfo from './container/geniusinfo/geniusinfo'
+// dashboard
+import Dashboard from './component/dashboard/dashboard'
 import reducers from './reducer'
 import './config'
 import './index.css'
@@ -31,6 +33,10 @@ const store = createStore(reducers, compose(
 //   return <h2>BOSS 页面</h2>
 // }
 
+// function Dashboard() {
+//   return <h2>Dashboard</h2>
+// }
+
 ReactDOM.render(
   (<Provider store={store}>
     <BrowserRouter>
@@ -41,6 +47,7 @@ ReactDOM.render(
           <Route path='/geniusinfo' component={GeniusInfo}/>
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
+          <Route component={Dashboard}/>
         </Switch>
       </div>
     </BrowserRouter>
