@@ -4,14 +4,15 @@ import { NavBar } from 'antd-mobile'
 import { Switch, Route } from 'react-router-dom'
 import NavLinkBar from '../navlink/navlink'
 import Boss from '../../component/boss/boss'
+import Genius from '../../component/genius/genius'
 
 // function Boss(){
 //   return <h2>Boss首页</h2>
 // }
 
-function Genius(){
-  return <h2>求职者首页</h2>
-}
+// function Genius(){
+//   return <h2>求职者首页</h2>
+// }
 
 function Msg(){
   return <h2>消息列表</h2>
@@ -66,7 +67,7 @@ class Dashboard extends React.Component{
         <NavBar className='fixed-header' mode='dark'>
           {navList.find(v=>v.path===pathname).title}
         </NavBar>
-        <div style={{marginTop: 45}}>
+        <div style={{marginTop: 10}}>
           <Switch>
             {navList.map(v=>(
               <Route key={v.path} path={v.path} component={v.component} />
