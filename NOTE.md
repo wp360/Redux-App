@@ -136,10 +136,11 @@ const store = createStore(counter, applyMiddleware(thunk))
 * 调试窗的redux选项卡，实时看到state
 ```js
 // index.js
+// window.devToolsExtension
 import {createStore, applyMiddleware, compose} from 'redux'
 const store = createStore(counter, compose(
   applyMiddleware(thunk),
-  window.devToolsExtension?window.devToolsExtension():f=>f
+  window.__REDUX_DEVTOOLS_EXTENSION__?window.__REDUX_DEVTOOLS_EXTENSION__():f=>f
 ))
 ```
 ## 优雅管理
