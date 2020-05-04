@@ -3,11 +3,13 @@ const Router = express.Router()
 const utils = require('utility')
 const model = require('./model')
 const User = model.getModel('user')
+// 引入聊天数据模型
+const Chat = model.getModel('chat')
 // 过滤查询条件
 const _filter = {'pwd':0, '__v':0}
 
 // 用户列表
-Router.get('/list',function(req,res){
+Router.get('/list',function(req,res) {
   const {type} = req.query
   // 清空用户信息
   // User.remove({}, function(e,d){})
@@ -30,6 +32,17 @@ Router.post('/update', function(req, res) {
       type: doc.type
     }, body)
     return res.json({code: 0, data})
+  })
+})
+
+// 获取聊天列表
+Router.get('/getmsglist', function (req, res) {
+  // const user = req.cookies.user
+  // {'$or':[{from:user, to:user}]}
+  Chat.find({}, function(err, doc) {
+    if(!err){
+      return res.json({code:0, msg: doc})
+    }
   })
 })
 

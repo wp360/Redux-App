@@ -1,8 +1,14 @@
 import React from 'react'
 import {List, InputItem} from 'antd-mobile'
-import io from 'socket.io-client'
-const socket = io('ws://localhost:5000')
+import {connect} from 'react-redux'
+import {getMsgList} from '../../redux/chat.redux'
+// import io from 'socket.io-client'
+// const socket = io('ws://localhost:5000')
 
+@connect(
+  state=>state,
+  {getMsgList}
+)
 class Chat extends React.Component{
   constructor(props) {
     super(props)
@@ -14,16 +20,17 @@ class Chat extends React.Component{
 
   componentDidMount() {
     // 获取一下信息
-    socket.on('recvmsg', (data) => {
-      // console.log(data)
-      this.setState({
-        msg: [...this.state.msg, data.text]
-      })
-    })
+    this.props.getMsgList()
+    // socket.on('recvmsg', (data) => {
+    //   // console.log(data)
+    //   this.setState({
+    //     msg: [...this.state.msg, data.text]
+    //   })
+    // })
   }
 
   handleSubmit() {
-    socket.emit('sendmsg', {text: this.state.text})
+    // socket.emit('sendmsg', {text: this.state.text})
     // 清空信息
     this.setState({text: ''})
     // console.log(this.state)
