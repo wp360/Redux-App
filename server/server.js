@@ -11,7 +11,13 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
 io.on('connection', function(socket) {
-  console.log('用户登录')
+  // console.log('用户登录')
+  // 监听客户端发送的信息
+  socket.on('sendmsg', function (data) {
+    console.log(data)
+    // 发送信息到全局
+    io.emit('recvmsg', data)
+  })
 })
 
 const userRouter = require('./user')
