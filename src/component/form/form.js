@@ -9,7 +9,7 @@ export default function Form(Comp) {
     }
 
     handleChange(key, val) {
-      console.log(key, val)
+      // console.log(key, val)
       this.setState({
         [key]: val
       })

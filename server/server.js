@@ -1,7 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-
+const model = require('./model')
+// 引入聊天数据模型
+const Chat = model.getModel('chat')
 // 新建app
 const app = express()
 
@@ -14,9 +16,15 @@ io.on('connection', function(socket) {
   // console.log('用户登录')
   // 监听客户端发送的信息
   socket.on('sendmsg', function (data) {
-    console.log(data)
+    // console.log('返回信息：', data)
     // 发送信息到全局
-    io.emit('recvmsg', data)
+    // io.emit('recvmsg', data)
+    const {from, to, msg} = data
+    const chatid = [from, to].sort().join('_')
+    // console.log(chatid)
+    Chat.create({chatid, from, to, content: msg}, function(err, doc) {
+      io.emit('recvmsg', Object.assign({}, doc._doc))
+    })
   })
 })
 

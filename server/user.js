@@ -8,6 +8,11 @@ const Chat = model.getModel('chat')
 // 过滤查询条件
 const _filter = {'pwd':0, '__v':0}
 
+// 清空聊天数据
+// Chat.remove({}, function(e, d) {
+
+// })
+
 // 用户列表
 Router.get('/list',function(req,res) {
   const {type} = req.query
