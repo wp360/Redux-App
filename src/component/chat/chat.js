@@ -11,6 +11,7 @@ import {
   sendMsg,
   recvMsg
 } from '../../redux/chat.redux'
+import {getChatId} from '../../util'
 // import io from 'socket.io-client'
 // const socket = io('ws://localhost:5000')
 
@@ -66,12 +67,15 @@ class Chat extends React.Component{
     if(!users[userid]) {
       return null
     }
+    // 聊天信息（过滤）
+    const chatid = getChatId(userid, this.props.user._id)
+    const chatmsgs = this.props.chat.chatmsg.filter(v=>v.chatid === chatid)
     return (
       <div id="chat-page">
         <NavBar mode='dark' icon={(<Icon type="left"/>)} onLeftClick={()=>{this.props.history.goBack()}}>
           {users[userid].name}
         </NavBar>
-        {this.props.chat.chatmsg.map(v=>{
+        {chatmsgs.map(v=>{
           // 头像
           const avatar = require(`../img/${users[v.from].avatar}.png`)
           return v.from === userid ? (

@@ -23,10 +23,15 @@ export function chat(state=initState, action) {
         ...state,
         users: action.payload.users,
         chatmsg: action.payload.msgs,
-        unread: action.payload.msgs.filter(v => !v.read).length
+        unread: action.payload.msgs.filter(v => !v.read && v.to===action.payload.userid).length
       }
     case MSG_RECV:
-      return {...state, chatmsg: [...state.chatmsg, action.payload], unread: state.unread+1}
+      const n = action.payload.to === action.userid ? 1 : 0
+      return {
+        ...state,
+        chatmsg: [...state.chatmsg, action.payload],
+        unread: state.unread + n
+      }
     // case MSG_READ:
 
     default:
@@ -34,17 +39,28 @@ export function chat(state=initState, action) {
   }
 }
 
-function msgList(msgs, users) {
-  return {type: MSG_LIST, payload: {msgs, users}}
+function msgList(msgs, users, userid) {
+  return {
+    type: MSG_LIST,
+    payload: {
+      msgs,
+      users,
+      userid
+    }
+  }
 }
 
 export function getMsgList() {
-  return dispatch => {
+  // getState获取应用所有的状态
+  return (dispatch, getState) => {
     axios.get('/user/getmsglist')
       .then(res=>{
         // console.log('返回值：', res)
         if (res.status === 200 && res.data.code === 0) {
-          dispatch(msgList(res.data.msgs, res.data.users))
+          // 当前登录的用户
+          const userid = getState().user._id
+          // console.log('getState', getState())
+          dispatch(msgList(res.data.msgs, res.data.users, userid))
         }
       })
   }
@@ -56,18 +72,20 @@ export function sendMsg(from, to, msg) {
   }
 }
 
-function msgRecv(msg) {
+function msgRecv(msg, userid) {
   return {
+    userid,
     type: MSG_RECV,
     payload: msg
   }
 }
 
 export function recvMsg() {
-  return dispatch => {
+  return (dispatch, getState) => {
     socket.on('recvmsg', function(data) {
+      const userid = getState().user._id
       // console.log('接收信息: ', data)
-      dispatch(msgRecv(data))
+      dispatch(msgRecv(data, userid))
     })
   }
 }

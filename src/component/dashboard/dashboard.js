@@ -35,8 +35,11 @@ function Msg(){
 )
 class Dashboard extends React.Component{
   componentDidMount() {
-    this.props.getMsgList()
-    this.props.recvMsg()
+    // 判断是否已经有消息信息
+    if(!this.props.chat.chatmsg.length) {
+      this.props.getMsgList()
+      this.props.recvMsg()
+    }
   }
   render() {
     const {pathname} = this.props.location
