@@ -1,3 +1,7 @@
+* {
+  touch-action: pan-y;
+}
+
 .error-msg {
   color: #f50;
   padding: 20px 0 0 10px;
@@ -27,6 +31,15 @@
 #chat-page .chat-me .am-list-content {
   padding-right: 15px;
   text-align: right;
+}
+
+/* 表情包模块样式调整 */
+#chat-page .am-grid-icon {
+  display: none;
+}
+
+#chat-page .am-grid-text {
+  margin-top: 0;
 }
 
 .stick-footer {
