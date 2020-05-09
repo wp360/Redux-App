@@ -33,8 +33,10 @@ class Chat extends React.Component{
 
   componentDidMount() {
     // 获取一下信息
-    this.props.getMsgList()
-    this.props.recvMsg()
+    if(!this.props.chat.chatmsg.length) {
+      this.props.getMsgList()
+      this.props.recvMsg()
+    }
     // socket.on('recvmsg', (data) => {
     //   // console.log(data)
     //   this.setState({
@@ -58,21 +60,29 @@ class Chat extends React.Component{
   render() {
     // console.log(this.props)
     // {this.state.msg.map(v=>{return <p key={v}>{v}</p>})}
-    const user = this.props.match.params.user
+    const userid = this.props.match.params.user
     const Item = List.Item
+    const users = this.props.chat.users
+    if(!users[userid]) {
+      return null
+    }
     return (
       <div id="chat-page">
-        <NavBar mode='dark' icon={(<Icon type="left"/>)}>{user}</NavBar>
+        <NavBar mode='dark' icon={(<Icon type="left"/>)} onLeftClick={()=>{this.props.history.goBack()}}>
+          {users[userid].name}
+        </NavBar>
         {this.props.chat.chatmsg.map(v=>{
-          return v.from === user ? (
+          // 头像
+          const avatar = require(`../img/${users[v.from].avatar}.png`)
+          return v.from === userid ? (
             <List key={v._id}>
-              <Item>
+              <Item thumb={avatar}>
                 {v.content}
               </Item>
             </List>
           ) : (
             <List key={v._id}>
-              <Item extra={'avatar'} className="chat-me">
+              <Item extra={<img src={avatar} alt="头像" />} className="chat-me">
                 {v.content}
               </Item>
             </List>
