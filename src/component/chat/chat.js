@@ -13,6 +13,7 @@ import {
   recvMsg
 } from '../../redux/chat.redux'
 import {getChatId} from '../../util'
+// import { emojiIndex } from 'emoji-mart'
 // import io from 'socket.io-client'
 // const socket = io('ws://localhost:5000')
 
@@ -81,6 +82,15 @@ class Chat extends React.Component{
       .map(v => ({
         text: v
       }))
+    // const emoji = emojiIndex.search('smile')
+    // .map((o) => o.native)
+    // .toString()
+    // .split(',')
+    // .filter(v => v)
+    // .map(v => ({
+    //       text: v
+    //     }))
+    // console.log(emoji)
     const userid = this.props.match.params.user
     const Item = List.Item
     const users = this.props.chat.users
