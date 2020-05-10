@@ -10,6 +10,7 @@ export function getRedirectPath({type,avatar}){
   return url
 }
 
+// userId 用户id, targetId 聊天id
 export function getChatId(userId, targetId) {
   return [userId, targetId].sort().join('_')
 }

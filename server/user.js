@@ -18,8 +18,32 @@ Router.get('/list',function(req,res) {
   const {type} = req.query
   // 清空用户信息
   // User.remove({}, function(e,d){})
-  User.find({type},function(err,doc) {
+  User.find({type},_filter,function(err,doc) {
+    if(err) {
+      res.end('服务端出错')
+      return
+    }
     return res.json({code: 0, data: doc})
+  })
+})
+
+// 消息阅读数
+Router.post('/readmsg', function (req, res) {
+  const userid = req.cookies.userid
+  const {from} = req.body
+  // console.log(userid, from)
+  // update
+  Chat.updateMany(
+    {from, to: userid},
+    {'$set': {read: true}},
+    {'multi': true},
+    function(err,doc) {
+    // console.log(doc)
+    if (!err) {
+      return res.json({code: 0, num: doc.nModified})
+    } else {
+      return res.json({code: 1, msg: '修改失败'})
+    }
   })
 })
 
@@ -28,7 +52,10 @@ Router.post('/update', function(req, res) {
   const userid = req.cookies.userid
   if(!userid) {
     // 将对象转换为 JSON 字符串
-    return json.dumps({code: 1})
+    // return json.dumps({code: 1})
+    return res.json({
+      code: 1
+    })
   }
   const body = req.body
   User.findByIdAndUpdate(userid,body,function(err,doc) {
@@ -42,7 +69,7 @@ Router.post('/update', function(req, res) {
 
 // 获取聊天列表
 Router.get('/getmsglist', function (req, res) {
-  const user = req.cookies.userid
+  const userid = req.cookies.userid
   // 查询用户信息
   User.find({}, function(e, userdoc) {
     let users = {}
@@ -51,7 +78,7 @@ Router.get('/getmsglist', function (req, res) {
       users[v._id] = {name: v.user, avatar: v.avatar}
     })
 
-    Chat.find({'$or':[{from:user}, {to:user}]}, function(err, doc) {
+    Chat.find({'$or':[{from:userid}, {to:userid}]}, function(err, doc) {
       if(!err){
         return res.json({code:0, msgs: doc, users: users})
       }
@@ -68,7 +95,7 @@ Router.get('/getmsglist', function (req, res) {
 // 用户登录
 Router.post('/login', function(req, res){
   // console.log(req.body)
-  const {user,pwd,type} = req.body
+  const {user,pwd} = req.body
   // {'pwd': 0} 密码前端不显示
   User.findOne({user, pwd: md5Pwd(pwd)},_filter,function(err,doc){
     if(!doc){
@@ -88,18 +115,31 @@ Router.post('/register',function(req,res){
       return res.json({code:1,msg:'用户名重复'})
     }
 
-    const userModel = new User({user,type,pwd:md5Pwd(pwd)})
-    userModel.save(function(e,d) {
-      if(e) {
-        return res.json({
-          code: 1,
-          msg: '网络问题'
-        })
-      }
-      const {user,type,_id} = d
-      res.cookie('userid',_id)
-      return res.json({code:0,data:{user,type,_id}})
+    User.create({user,pwd:md5Pwd(pwd),type},(err,doc)=>{
+        if(err){
+            return res.json({
+              code: 1,
+              msg: "网络问题"
+            })
+        }
+        console.log(doc)
+        const _id = doc._id
+        res.cookie('userid',_id)
+        return res.json({code:0,data:{user,type,_id}})
     })
+
+    // const userModel = new User({user,type,pwd:md5Pwd(pwd)})
+    // userModel.save(function(e,d) {
+    //   if(e) {
+    //     return res.json({
+    //       code: 1,
+    //       msg: '网络问题'
+    //     })
+    //   }
+    //   const {user,type,_id} = d
+    //   res.cookie('userid',_id)
+    //   return res.json({code:0,data:{user,type,_id}})
+    // })
     // User.create({user,pwd:md5Pwd(pwd),type},function(e,d){
     //   if(e){
     //     console.log(e)
@@ -110,6 +150,7 @@ Router.post('/register',function(req,res){
   })
 })
 
+//查找用户
 Router.get('/info',function(req,res){
   // 用户有没有cookie
   const {userid} = req.cookies

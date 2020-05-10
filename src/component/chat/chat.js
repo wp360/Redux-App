@@ -10,9 +10,12 @@ import {connect} from 'react-redux'
 import {
   getMsgList,
   sendMsg,
-  recvMsg
+  recvMsg,
+  readMsg
 } from '../../redux/chat.redux'
-import {getChatId} from '../../util'
+import {
+  getChatId
+} from '../../util'
 // import { emojiIndex } from 'emoji-mart'
 // import io from 'socket.io-client'
 // const socket = io('ws://localhost:5000')
@@ -22,7 +25,8 @@ import {getChatId} from '../../util'
   {
     getMsgList,
     sendMsg,
-    recvMsg
+    recvMsg,
+    readMsg
   }
 )
 class Chat extends React.Component{
@@ -40,6 +44,8 @@ class Chat extends React.Component{
       this.props.getMsgList()
       this.props.recvMsg()
     }
+    // console.log(this.props)
+
     // socket.on('recvmsg', (data) => {
     //   // console.log(data)
     //   this.setState({
@@ -48,6 +54,12 @@ class Chat extends React.Component{
     // })
     // 解决Grid第一次加载显示一行问题
     // this.fixCarousel()
+  }
+
+  componentWillUnmount() {
+    // console.log('Unmount')
+    const to = this.props.match.params.user
+    this.props.readMsg(to)
   }
 
   // 修正跑马灯
